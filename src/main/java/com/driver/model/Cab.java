@@ -4,32 +4,28 @@ import javax.persistence.*;
 
 @Entity
 public class Cab {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+
     private int perKmRate;
+
     private boolean available;
 
-
-    // No args constructor
     public Cab() {
     }
 
-    // All args constructor
     public Cab(int perKmRate, boolean available) {
         this.perKmRate = perKmRate;
         this.available = available;
     }
 
-    // Getter and Setter
-
     public int getId() {
-        return Id;
+        return id;
     }
 
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
 
     public int getPerKmRate() {
@@ -40,18 +36,16 @@ public class Cab {
         this.perKmRate = perKmRate;
     }
 
-    public boolean isAvailable() {
+    public boolean getAvailable() {
         return available;
     }
 
     public void setAvailable(boolean available) {
         this.available = available;
     }
-
-    // Mapping
-    @OneToOne
     @JoinColumn
-    private Driver driver;
+    @OneToOne
+    Driver driver;
 
     public Driver getDriver() {
         return driver;

@@ -4,32 +4,40 @@ import javax.persistence.*;
 
 @Entity
 public class TripBooking{
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int tripBookingId;
+
     private String fromLocation;
+
     private String toLocation;
+
     private int distanceInKm;
-    @Enumerated(value = EnumType.STRING)
-    private TripStatus tripStatus;
+
+    @Enumerated(EnumType.STRING)
+    private TripStatus status;
     private int bill;
 
 
-    // No args constructor
+    @JoinColumn
+    @ManyToOne
+    private Customer customer;
+
+    @JoinColumn
+    @ManyToOne
+    private Driver driver;
+
+
     public TripBooking() {
     }
 
-    // All args constructor
-    public TripBooking(String fromLocation, String toLocation, int distanceInKm, TripStatus tripStatus, int bill) {
+    public TripBooking(String fromLocation, String toLocation, int distanceInKm, TripStatus status) {
         this.fromLocation = fromLocation;
         this.toLocation = toLocation;
         this.distanceInKm = distanceInKm;
-        this.tripStatus = tripStatus;
-        this.bill = bill;
-    }
+        this.status = status;
 
-    // Getter and Setter
+    }
 
     public int getTripBookingId() {
         return tripBookingId;
@@ -63,12 +71,12 @@ public class TripBooking{
         this.distanceInKm = distanceInKm;
     }
 
-    public TripStatus getTripStatus() {
-        return tripStatus;
+    public TripStatus getStatus() {
+        return status;
     }
 
-    public void setTripStatus(TripStatus tripStatus) {
-        this.tripStatus = tripStatus;
+    public void setStatus(TripStatus status) {
+        this.status = status;
     }
 
     public int getBill() {
@@ -79,12 +87,13 @@ public class TripBooking{
         this.bill = bill;
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
 
-
-    // Mapping
-    @ManyToOne
-    @JoinColumn
-    private Driver driver;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
     public Driver getDriver() {
         return driver;
@@ -92,19 +101,5 @@ public class TripBooking{
 
     public void setDriver(Driver driver) {
         this.driver = driver;
-    }
-
-
-    // Mapping
-    @ManyToOne
-    @JoinColumn
-    private Customer customer;
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
     }
 }
